@@ -19,9 +19,6 @@
     --white: #f0ece3;
     --grey: #7a8fa8;
     --silver: #c8d4e8;
-    --envelope-front: #1a3360;
-    --envelope-back: #142850;
-    --envelope-flap: #1f3d72;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +31,6 @@
     min-height: 100vh;
   }
 
-  /* ─── BACKGROUND ─── */
   body::before {
     content: '';
     position: fixed;
@@ -66,10 +62,11 @@
   }
 
   .pw-emblem {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 1rem;
     filter: drop-shadow(0 0 18px rgba(200,168,75,0.35));
+    border-radius: 50%;
   }
 
   .pw-header h1 {
@@ -136,10 +133,7 @@
     text-align: left;
   }
 
-  .pw-input-wrap {
-    position: relative;
-    margin-bottom: 1.2rem;
-  }
+  .pw-input-wrap { position: relative; margin-bottom: 1.2rem; }
 
   .pw-input {
     width: 100%;
@@ -179,8 +173,7 @@
     transition: all 0.25s;
     box-shadow: 0 4px 20px rgba(200,168,75,0.25);
   }
-
-  .pw-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(200,168,75,0.35); }
+  .pw-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
   .pw-error {
     color: #e74c3c;
@@ -204,7 +197,6 @@
     z-index: 1;
     padding: 2rem 1rem 4rem;
   }
-
   #landing.active { display: flex; }
 
   .landing-header {
@@ -212,7 +204,6 @@
     margin-bottom: 1.5rem;
     animation: fadeDown 0.7s ease both;
   }
-
   .landing-header .sams-sub {
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.65rem;
@@ -221,14 +212,13 @@
     text-transform: uppercase;
     margin-bottom: 0.4rem;
   }
-
   .landing-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.4rem, 4vw, 2rem);
     color: var(--white);
   }
 
-  /* ─── ENVELOPE (THE STAR OF THE SHOW) ─── */
+  /* ─── ENVELOPE ─── */
   .envelope-stage {
     display: flex;
     flex-direction: column;
@@ -237,7 +227,6 @@
     animation: fadeUp 0.8s ease 0.2s both;
     width: 100%;
   }
-
   .envelope-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.68rem;
@@ -245,52 +234,28 @@
     color: var(--gold);
     text-transform: uppercase;
   }
-
   .envelope-outer {
     position: relative;
     cursor: pointer;
     filter: drop-shadow(0 20px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(200,168,75,0.15));
     transition: filter 0.4s ease, transform 0.4s ease;
   }
-
   .envelope-outer:hover {
     filter: drop-shadow(0 30px 80px rgba(0,0,0,0.8)) drop-shadow(0 0 50px rgba(200,168,75,0.3));
     transform: translateY(-6px) scale(1.015);
   }
-
-  .envelope-svg {
-    width: min(580px, 95vw);
-    height: auto;
-  }
-
-  /* Flap animation */
+  .envelope-svg { width: min(580px, 95vw); height: auto; }
   .env-flap {
     transform-origin: 50% 0%;
     transform-box: fill-box;
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform: perspective(600px) rotateX(0deg);
   }
-
-  .envelope-outer:hover .env-flap {
-    transform: perspective(600px) rotateX(-35deg);
-  }
-
-  /* Gold shine */
-  .env-shine {
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
+  .envelope-outer:hover .env-flap { transform: perspective(600px) rotateX(-35deg); }
+  .env-shine { opacity: 0; transition: opacity 0.4s; }
   .envelope-outer:hover .env-shine { opacity: 0.06; }
-
-  /* Pulse ring */
-  .env-pulse {
-    animation: pulseRing 2.5s ease-in-out infinite;
-  }
-  @keyframes pulseRing {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.9; }
-  }
-
+  .env-pulse { animation: pulseRing 2.5s ease-in-out infinite; }
+  @keyframes pulseRing { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; } }
   .open-hint {
     font-family: 'Crimson Pro', serif;
     font-style: italic;
@@ -301,18 +266,8 @@
     align-items: center;
     gap: 0.5rem;
   }
-
-  .open-hint::before, .open-hint::after {
-    content: '✦';
-    font-size: 0.5rem;
-    color: var(--gold);
-    opacity: 0.6;
-  }
-
-  @keyframes breathe {
-    0%, 100% { opacity: 0.4; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-3px); }
-  }
+  .open-hint::before, .open-hint::after { content: '✦'; font-size: 0.5rem; color: var(--gold); opacity: 0.6; }
+  @keyframes breathe { 0%, 100% { opacity: 0.4; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
 
   /* ─── DIPLOMA PAGE ─── */
   #diploma-page {
@@ -325,7 +280,6 @@
     position: relative;
     z-index: 1;
   }
-
   #diploma-page.active { display: flex; animation: fadeIn 0.7s ease; }
 
   .back-btn {
@@ -350,11 +304,7 @@
   }
   .back-btn:hover { color: var(--gold); border-color: rgba(200,168,75,0.5); }
 
-  .diploma-container {
-    width: 100%;
-    max-width: 820px;
-    margin-top: 1rem;
-  }
+  .diploma-container { width: 100%; max-width: 820px; margin-top: 1rem; }
 
   .diploma-card {
     background: var(--cream);
@@ -366,262 +316,100 @@
     box-shadow: 0 0 0 8px var(--cream), 0 0 0 11px var(--gold), 0 40px 80px rgba(0,0,0,0.5);
     animation: diplomaReveal 0.9s cubic-bezier(0.22,1,0.36,1) both;
   }
-
-  @keyframes diplomaReveal {
-    from { opacity: 0; transform: translateY(25px) scale(0.96); }
-    to { opacity: 1; transform: none; }
-  }
-
-  .diploma-card::before {
-    content: '';
-    position: absolute;
-    inset: 18px;
-    border: 1px solid rgba(200,168,75,0.25);
-    pointer-events: none;
-  }
+  @keyframes diplomaReveal { from { opacity: 0; transform: translateY(25px) scale(0.96); } to { opacity: 1; transform: none; } }
+  .diploma-card::before { content: ''; position: absolute; inset: 18px; border: 1px solid rgba(200,168,75,0.25); pointer-events: none; }
 
   .diploma-watermark {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%,-50%) rotate(-25deg);
     font-family: 'Playfair Display', serif;
-    font-size: 9rem;
-    font-weight: 700;
+    font-size: 9rem; font-weight: 700;
     color: rgba(200,168,75,0.04);
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
+    pointer-events: none; user-select: none; white-space: nowrap;
   }
 
   .diploma-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
-
-  .diploma-logo-left, .diploma-logo-right {
-    display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
-  }
-
-  .diploma-logo-left svg, .diploma-logo-right svg { width: 58px; height: 58px; }
-
+  .diploma-logo-left, .diploma-logo-right { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+  .diploma-logo-left img, .diploma-logo-right img { width: 58px; height: 58px; object-fit: contain; }
   .diploma-logo-text, .diploma-logo-right-text {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 0.48rem;
-    letter-spacing: 0.12em;
-    color: var(--navy);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1.4;
-    max-width: 80px;
+    font-size: 0.48rem; letter-spacing: 0.12em;
+    color: var(--navy); text-transform: uppercase;
+    text-align: center; line-height: 1.4; max-width: 80px;
   }
-
   .diploma-title-block { text-align: center; flex: 1; padding: 0 1.5rem; }
+  .diploma-authority { font-family: 'Rajdhani', sans-serif; font-size: 0.55rem; letter-spacing: 0.45em; color: var(--red-dark); text-transform: uppercase; margin-bottom: 0.3rem; }
+  .diploma-main-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+  .diploma-subtitle { font-family: 'Rajdhani', sans-serif; font-size: 0.58rem; letter-spacing: 0.28em; color: #555; text-transform: uppercase; margin-top: 0.25rem; }
 
-  .diploma-authority {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.45em;
-    color: var(--red-dark);
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-
-  .diploma-main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.1;
-  }
-
-  .diploma-subtitle {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.28em;
-    color: #555;
-    text-transform: uppercase;
-    margin-top: 0.25rem;
-  }
-
-  .diploma-line {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
-    margin: 1.2rem 0;
-  }
-
-  .diploma-certifie {
-    text-align: center;
-    font-family: 'Crimson Pro', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: #444;
-    margin-bottom: 0.5rem;
-  }
-
-  .diploma-name {
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin: 0.6rem 0;
-    line-height: 1.1;
-  }
-
-  .diploma-corps {
-    text-align: center;
-    font-family: 'Crimson Pro', serif;
-    font-size: 0.95rem;
-    color: #555;
-    line-height: 1.65;
-    margin: 0.8rem auto;
-    max-width: 540px;
-  }
+  .diploma-line { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent); margin: 1.2rem 0; }
+  .diploma-certifie { text-align: center; font-family: 'Crimson Pro', serif; font-style: italic; font-size: 1rem; color: #444; margin-bottom: 0.5rem; }
+  .diploma-name { text-align: center; font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--navy); margin: 0.6rem 0; line-height: 1.1; }
+  .diploma-corps { text-align: center; font-family: 'Crimson Pro', serif; font-size: 0.95rem; color: #555; line-height: 1.65; margin: 0.8rem auto; max-width: 540px; }
 
   .diploma-formation-box {
-    background: var(--navy);
-    color: var(--gold-pale);
-    text-align: center;
-    padding: 0.9rem 2rem;
-    margin: 1.2rem auto;
-    max-width: 420px;
-    border-radius: 2px;
-    position: relative;
+    background: var(--navy); color: var(--gold-pale);
+    text-align: center; padding: 0.9rem 2rem;
+    margin: 1.2rem auto; max-width: 420px; border-radius: 2px; position: relative;
   }
-
-  .diploma-formation-box::before {
-    content: '';
-    position: absolute;
-    top: 4px; bottom: 4px; left: 4px; right: 4px;
-    border: 1px solid rgba(200,168,75,0.3);
-  }
-
-  .diploma-formation-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.35em;
-    color: var(--gold);
-    margin-bottom: 0.3rem;
-    text-transform: uppercase;
-  }
-
-  .diploma-formation-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--white);
-  }
+  .diploma-formation-box::before { content: ''; position: absolute; top: 4px; bottom: 4px; left: 4px; right: 4px; border: 1px solid rgba(200,168,75,0.3); }
+  .diploma-formation-title { font-family: 'Rajdhani', sans-serif; font-size: 0.55rem; letter-spacing: 0.35em; color: var(--gold); margin-bottom: 0.3rem; text-transform: uppercase; }
+  .diploma-formation-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); }
 
   .diploma-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem; gap: 1rem; }
-
   .diploma-sig { text-align: center; flex: 1; }
   .diploma-sig-line { height: 1px; background: #bbb; margin-bottom: 0.4rem; }
   .diploma-sig-name { font-family: 'Playfair Display', serif; font-size: 0.75rem; color: var(--navy); font-style: italic; }
   .diploma-sig-title { font-family: 'Rajdhani', sans-serif; font-size: 0.48rem; letter-spacing: 0.15em; color: #666; text-transform: uppercase; }
-
   .diploma-date-block, .diploma-num { text-align: center; flex: 1; }
   .diploma-date-label, .diploma-num-label { font-family: 'Rajdhani', sans-serif; font-size: 0.52rem; letter-spacing: 0.2em; color: #888; text-transform: uppercase; }
   .diploma-date-value { font-family: 'Crimson Pro', serif; font-size: 0.9rem; color: var(--navy); font-style: italic; }
   .diploma-num-value { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: #444; font-weight: 600; }
 
   .download-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.7rem;
-    margin: 2rem auto;
-    padding: 0.9rem 2.5rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 4px 20px rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+    margin: 2rem auto; padding: 0.9rem 2.5rem;
+    background: var(--gold); color: var(--navy);
+    font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    border: none; border-radius: 3px; cursor: pointer;
+    transition: all 0.25s; box-shadow: 0 4px 20px rgba(200,168,75,0.3);
   }
   .download-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
   .download-btn svg { width: 17px; height: 17px; }
 
   /* ─── ADMIN PANEL ─── */
   #admin-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(4,8,16,0.92);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    display: none; position: fixed; inset: 0;
+    background: rgba(4,8,16,0.92); backdrop-filter: blur(10px);
+    z-index: 1000; align-items: center; justify-content: center; padding: 1rem;
   }
   #admin-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
 
   .admin-panel {
-    background: var(--navy-mid);
-    border: 1px solid rgba(200,168,75,0.3);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 620px;
-    max-height: 90vh;
-    overflow-y: auto;
+    background: var(--navy-mid); border: 1px solid rgba(200,168,75,0.3);
+    border-radius: 8px; width: 100%; max-width: 680px;
+    max-height: 90vh; overflow-y: auto;
     box-shadow: 0 40px 100px rgba(0,0,0,0.7);
   }
 
   .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(200,168,75,0.2);
-    position: sticky;
-    top: 0;
-    background: var(--navy-mid);
-    z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 2rem; border-bottom: 1px solid rgba(200,168,75,0.2);
+    position: sticky; top: 0; background: var(--navy-mid); z-index: 10;
   }
-
-  .admin-header h2 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  .admin-close {
-    background: none;
-    border: none;
-    color: var(--grey);
-    cursor: pointer;
-    font-size: 1.3rem;
-    transition: color 0.2s;
-  }
+  .admin-header h2 { font-family: 'Rajdhani', sans-serif; font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .admin-close { background: none; border: none; color: var(--grey); cursor: pointer; font-size: 1.3rem; transition: color 0.2s; }
   .admin-close:hover { color: var(--white); }
 
   .admin-body { padding: 2rem; }
 
-  .admin-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
+  .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; }
   .admin-tab {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--grey);
-    padding: 0.5rem 1.2rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: all 0.2s;
+    font-family: 'Rajdhani', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--grey); padding: 0.5rem 1.2rem; border: none; background: none; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
   }
   .admin-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 
@@ -629,113 +417,37 @@
   .tab-content.active { display: block; }
 
   .form-group { margin-bottom: 1.2rem; }
-
-  .form-label {
-    display: block;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--grey);
-    margin-bottom: 0.4rem;
-  }
-
+  .form-label { display: block; font-family: 'Rajdhani', sans-serif; font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--grey); margin-bottom: 0.4rem; }
   .form-input {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 3px;
-    padding: 0.65rem 0.9rem;
-    color: var(--white);
-    font-family: 'Crimson Pro', serif;
-    font-size: 1rem;
-    transition: border-color 0.2s;
+    width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px; padding: 0.65rem 0.9rem; color: var(--white);
+    font-family: 'Crimson Pro', serif; font-size: 1rem; transition: border-color 0.2s;
   }
   .form-input:focus { outline: none; border-color: var(--gold); }
-
   .form-select {
-    width: 100%;
-    background: rgba(15,30,53,0.9);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 3px;
-    padding: 0.65rem 0.9rem;
-    color: var(--white);
-    font-family: 'Crimson Pro', serif;
-    font-size: 1rem;
-    cursor: pointer;
+    width: 100%; background: rgba(15,30,53,0.9); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px; padding: 0.65rem 0.9rem; color: var(--white);
+    font-family: 'Crimson Pro', serif; font-size: 1rem; cursor: pointer;
   }
 
   .generate-btn {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    border-radius: 3px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
+    width: 100%; padding: 0.8rem; background: var(--gold); color: var(--navy);
+    border: none; border-radius: 3px; font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; margin-top: 0.5rem;
   }
   .generate-btn:hover { background: var(--gold-light); }
 
   .generated-result-box {
-    margin-top: 1.5rem;
-    padding: 1.2rem;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(200,168,75,0.3);
-    border-radius: 4px;
-    display: none;
+    margin-top: 1.5rem; padding: 1.2rem; background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(200,168,75,0.3); border-radius: 4px; display: none;
   }
   .generated-result-box.visible { display: block; }
-
-  .result-row {
-    display: flex;
-    gap: 0.8rem;
-    margin-bottom: 0.8rem;
-    align-items: flex-start;
-  }
-
-  .result-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    min-width: 80px;
-    padding-top: 0.3rem;
-  }
-
-  .result-value {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem;
-    color: var(--white);
-    background: rgba(255,255,255,0.05);
-    padding: 0.4rem 0.7rem;
-    border-radius: 2px;
-    cursor: pointer;
-    flex: 1;
-    word-break: break-all;
-    transition: background 0.2s;
-  }
+  .result-row { display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start; }
+  .result-label { font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); min-width: 80px; padding-top: 0.3rem; }
+  .result-value { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: var(--white); background: rgba(255,255,255,0.05); padding: 0.4rem 0.7rem; border-radius: 2px; cursor: pointer; flex: 1; word-break: break-all; transition: background 0.2s; }
   .result-value:hover { background: rgba(255,255,255,0.1); }
-
-  .pw-badge {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    background: rgba(200,168,75,0.1);
-    border: 1px solid rgba(200,168,75,0.3);
-    padding: 0.4rem 1rem;
-    border-radius: 3px;
-  }
-
+  .pw-badge { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.25em; color: var(--gold); background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.3); padding: 0.4rem 1rem; border-radius: 3px; }
   .copy-hint { font-size: 0.58rem; color: var(--grey); margin-top: 0.25rem; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.1em; }
 
   /* Table */
@@ -743,29 +455,51 @@
   .diplomes-table th { font-family: 'Rajdhani', sans-serif; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(200,168,75,0.3); text-align: left; }
   .diplomes-table td { padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--white); vertical-align: middle; }
   .diplomes-table tr:hover td { background: rgba(255,255,255,0.02); }
-
   .delete-btn { background: none; border: 1px solid rgba(192,57,43,0.4); color: var(--red); padding: 0.2rem 0.5rem; border-radius: 2px; cursor: pointer; font-size: 0.65rem; font-family: 'Rajdhani', sans-serif; transition: all 0.2s; }
   .delete-btn:hover { background: rgba(192,57,43,0.15); }
-
   .view-link { font-family: 'Rajdhani', sans-serif; font-size: 0.62rem; letter-spacing: 0.08em; color: var(--gold); cursor: pointer; text-decoration: underline; }
   .empty-state { text-align: center; padding: 2rem; color: var(--grey); font-style: italic; font-size: 0.9rem; }
 
+  /* ─── CUSTOMISATION (2 signataires côte à côte) ─── */
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .sig-block { background: rgba(255,255,255,0.03); border: 1px solid rgba(200,168,75,0.15); border-radius: 4px; padding: 1rem; }
+  .sig-block-title { font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+
+  .section-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.5rem 0; }
+
+  .custom-section-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; margin-top: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .custom-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(200,168,75,0.2); }
+
+  .save-custom-btn {
+    width: 100%; padding: 0.8rem; background: rgba(200,168,75,0.15);
+    color: var(--gold); border: 1px solid rgba(200,168,75,0.4);
+    border-radius: 3px; font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; margin-top: 1rem;
+  }
+  .save-custom-btn:hover { background: rgba(200,168,75,0.25); }
+
+  .preview-badge {
+    display: inline-block; font-family: 'Rajdhani', sans-serif; font-size: 0.58rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey);
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.2rem 0.6rem; border-radius: 2px; margin-left: 0.5rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .preview-badge:hover { color: var(--gold); border-color: rgba(200,168,75,0.3); }
+
   /* ─── NOTIFICATION ─── */
   .notification {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: var(--gold);
-    color: var(--navy);
-    padding: 0.7rem 1.3rem;
-    border-radius: 3px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    z-index: 9999;
-    animation: slideIn 0.3s ease;
+    position: fixed; top: 1.5rem; right: 1.5rem;
+    background: var(--gold); color: var(--navy);
+    padding: 0.7rem 1.3rem; border-radius: 3px;
+    font-family: 'Rajdhani', sans-serif; font-size: 0.72rem;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    z-index: 9999; animation: slideIn 0.3s ease;
     box-shadow: 0 4px 20px rgba(200,168,75,0.3);
   }
 
@@ -783,15 +517,14 @@
     .diploma-header { flex-direction: column; align-items: center; gap: 1rem; }
     .diploma-footer { flex-direction: column; }
     .pw-box { padding: 2rem 1.5rem; }
+    .sig-grid { grid-template-columns: 1fr; }
   }
 
-  /* ─── SECRET TRIGGER ─── */
   #secret-trigger { position: fixed; bottom: 0; right: 0; width: 55px; height: 55px; cursor: default; z-index: 500; }
 </style>
 </head>
 <body>
 
-<!-- ─── SECRET ADMIN TRIGGER (coin bas-droit invisible) ─── -->
 <div id="secret-trigger" onclick="secretClick()"></div>
 
 <!-- ═══════════════════════════════════════════════ -->
@@ -799,13 +532,12 @@
 <!-- ═══════════════════════════════════════════════ -->
 <div id="password-page">
   <div class="pw-header">
-    <svg class="pw-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <img class="pw-emblem" src="https://i.ibb.co/bjQ1hR9t/sams.png" alt="SAMS Logo" onerror="this.style.display='none'; document.getElementById('pw-emblem-fallback').style.display='block'">
+    <svg id="pw-emblem-fallback" style="display:none" class="pw-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="47" fill="none" stroke="#c8a84b" stroke-width="1.5"/>
-      <circle cx="50" cy="50" r="42" fill="none" stroke="#c8a84b" stroke-width="0.5"/>
       <circle cx="50" cy="50" r="35" fill="#08111f"/>
       <rect x="44" y="26" width="12" height="48" rx="2" fill="#c0392b"/>
       <rect x="26" y="44" width="48" height="12" rx="2" fill="#c0392b"/>
-      <circle cx="50" cy="50" r="8" fill="#08111f"/>
       <circle cx="50" cy="50" r="5" fill="#c8a84b"/>
       <text x="50" y="90" font-family="Georgia,serif" font-size="5.5" fill="#c8a84b" text-anchor="middle" letter-spacing="2">S · A · M · S</text>
     </svg>
@@ -816,13 +548,11 @@
   <div class="pw-box">
     <h2>Accès à votre Pochette</h2>
     <p class="pw-tagline">Saisissez votre code d'accès personnel pour récupérer votre attestation de formation.</p>
-
     <div class="pw-divider">
       <div class="pw-divider-line"></div>
       <div class="pw-divider-dot"></div>
       <div class="pw-divider-line"></div>
     </div>
-
     <div class="pw-label">Code d'accès personnel</div>
     <div class="pw-input-wrap">
       <input type="password" class="pw-input" id="pw-input" placeholder="· · · · · · · ·"
@@ -845,7 +575,6 @@
   <div class="envelope-stage">
     <div class="envelope-label" id="envelope-owner-label">Pochette de formation officielle</div>
 
-    <!-- ════════════ GRANDE POCHETTE SVG ════════════ -->
     <div class="envelope-outer" onclick="openEnvelope()" title="Ouvrir votre pochette">
       <svg class="envelope-svg" viewBox="0 0 580 420" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -871,215 +600,112 @@
             <stop offset="70%" stop-color="#e8c87a"/>
             <stop offset="100%" stop-color="transparent"/>
           </linearGradient>
-          <linearGradient id="goldV" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="transparent"/>
-            <stop offset="30%" stop-color="#c8a84b"/>
-            <stop offset="70%" stop-color="#c8a84b"/>
-            <stop offset="100%" stop-color="transparent"/>
-          </linearGradient>
-          <filter id="softGlow">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-          <filter id="innerShadow">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-            <feOffset dx="0" dy="3"/>
-            <feComposite in2="SourceGraphic" operator="arithmetic" k2="-1" k3="1"/>
-          </filter>
         </defs>
 
-        <!-- Corps principal de la pochette -->
         <rect x="20" y="100" width="540" height="300" rx="6" fill="url(#envBodyGrad)" stroke="#c8a84b" stroke-width="1.5"/>
-
-        <!-- Bords diagonaux intérieurs (triangles pliés) -->
         <polygon points="20,100 290,245 560,100" fill="#142850" opacity="0.5"/>
-        <!-- Ombres latérales -->
         <rect x="20" y="100" width="90" height="300" fill="url(#envShadowL)" rx="6"/>
         <rect x="470" y="100" width="90" height="300" fill="url(#envShadowR)" rx="6"/>
-
-        <!-- Ligne de pli bas -->
         <line x1="20" y1="400" x2="290" y2="260" stroke="rgba(200,168,75,0.3)" stroke-width="1"/>
         <line x1="560" y1="400" x2="290" y2="260" stroke="rgba(200,168,75,0.3)" stroke-width="1"/>
 
-        <!-- ─── DESSINS GESTES PREMIERS SECOURS sur la pochette ─── -->
-        <!-- Zone de dessin : bas de la pochette, disposés en rangée -->
-
-        <!-- 1. RCP/MCE - Massage cardiaque -->
+        <!-- Dessins gestes premiers secours -->
         <g transform="translate(55, 280)">
-          <!-- Silhouette allongée -->
           <ellipse cx="0" cy="22" rx="25" ry="5" fill="rgba(200,168,75,0.1)" stroke="rgba(200,168,75,0.3)" stroke-width="0.8"/>
           <ellipse cx="0" cy="15" rx="6" ry="7" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="22" x2="0" y2="40" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="-12" y1="27" x2="12" y2="27" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="40" x2="-7" y2="52" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="40" x2="7" y2="52" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
-          <!-- Mains qui compriment -->
           <ellipse cx="0" cy="30" rx="9" ry="5" fill="rgba(192,57,43,0.25)" stroke="#c0392b" stroke-width="1.2"/>
-          <!-- Flèches de compression -->
-          <line x1="0" y1="18" x2="0" y2="26" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
-          <!-- Label -->
           <text x="0" y="66" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">MCE</text>
         </g>
-
-        <!-- 2. Défibrillateur -->
         <g transform="translate(140, 275)">
           <rect x="-16" y="0" width="32" height="24" rx="3" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <rect x="-12" y="3" width="24" height="18" rx="1.5" fill="rgba(200,168,75,0.07)"/>
-          <!-- ECG line -->
           <polyline points="-8,12 -4,6 0,16 4,9 8,12" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Électrodes -->
           <line x1="-16" y1="28" x2="-22" y2="38" stroke="rgba(200,168,75,0.6)" stroke-width="1"/>
           <line x1="16" y1="28" x2="22" y2="38" stroke="rgba(200,168,75,0.6)" stroke-width="1"/>
           <circle cx="-22" cy="40" r="4" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1"/>
           <circle cx="22" cy="40" r="4" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1"/>
-          <!-- Éclair -->
           <path d="M2,-3 L-2,4 L1,4 L-3,11" fill="none" stroke="#c8a84b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="0" y="55" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">DEF</text>
         </g>
-
-        <!-- 3. PLS - Position Latérale de Sécurité -->
         <g transform="translate(225, 285)">
-          <!-- Corps allongé sur le côté -->
           <ellipse cx="0" cy="-5" rx="7" ry="8" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
-          <!-- Corps en PLS -->
           <path d="M-20,10 Q-10,5 0,10 Q10,15 20,10" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
-          <!-- Bras avant -->
           <path d="M-5,10 L-15,22" stroke="rgba(200,168,75,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-          <!-- Jambe pliée -->
           <path d="M10,10 L18,20 L10,28" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-          <!-- Sol -->
           <line x1="-25" y1="32" x2="25" y2="32" stroke="rgba(200,168,75,0.3)" stroke-width="0.8"/>
           <text x="0" y="44" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">PLS</text>
         </g>
-
-        <!-- 4. Hémorragie / Bandage -->
         <g transform="translate(310, 278)">
-          <!-- Bras / membre -->
           <rect x="-8" y="0" width="16" height="40" rx="8" fill="rgba(200,168,75,0.08)" stroke="rgba(200,168,75,0.5)" stroke-width="1.2"/>
-          <!-- Plaie -->
           <ellipse cx="0" cy="15" rx="5" ry="3" fill="rgba(192,57,43,0.3)" stroke="#c0392b" stroke-width="0.8"/>
-          <!-- Bandage - bandes -->
           <path d="M-10,18 Q0,14 10,18" fill="none" stroke="white" stroke-width="2.5" opacity="0.7"/>
           <path d="M-10,23 Q0,19 10,23" fill="none" stroke="white" stroke-width="2.5" opacity="0.7"/>
           <path d="M-10,28 Q0,24 10,28" fill="none" stroke="white" stroke-width="2.5" opacity="0.7"/>
-          <!-- Croix rouge -->
-          <rect x="-5" y="30" width="10" height="10" rx="1" fill="none" stroke="#c0392b" stroke-width="1"/>
-          <line x1="0" y1="32" x2="0" y2="38" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="-3" y1="35" x2="3" y2="35" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round"/>
           <text x="0" y="50" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">HÉM</text>
         </g>
-
-        <!-- 5. Manœuvre de Heimlich -->
         <g transform="translate(400, 275)">
-          <!-- Silhouette debout de face -->
           <ellipse cx="0" cy="-5" rx="6" ry="7" fill="none" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="2" x2="0" y2="25" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="-8" y1="10" x2="8" y2="10" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="25" x2="-6" y2="40" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
           <line x1="0" y1="25" x2="6" y2="40" stroke="rgba(200,168,75,0.7)" stroke-width="1.2"/>
-          <!-- Bras qui entoure (sauveteur) -->
           <path d="M-15,15 Q-12,12 -8,14 Q0,17 8,14 Q12,12 15,15" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- Poings -->
           <circle cx="-14" cy="16" r="3" fill="rgba(192,57,43,0.3)" stroke="#c0392b" stroke-width="1"/>
-          <!-- Flèche compression -->
-          <line x1="-14" y1="20" x2="-14" y2="14" stroke="#c0392b" stroke-width="1.2" stroke-linecap="round"/>
           <text x="0" y="52" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">HEI</text>
         </g>
-
-        <!-- 6. Brûlure - rinçage -->
         <g transform="translate(490, 278)">
-          <!-- Bras -->
           <rect x="-7" y="0" width="14" height="35" rx="7" fill="rgba(200,168,75,0.08)" stroke="rgba(200,168,75,0.5)" stroke-width="1.2"/>
-          <!-- Zone brûlée -->
           <ellipse cx="0" cy="15" rx="6" ry="5" fill="rgba(192,57,43,0.25)"/>
-          <!-- Gouttes d'eau -->
           <path d="M-12,0 Q-14,5 -12,8 Q-10,5 -12,0Z" fill="#4fc3f7" opacity="0.7"/>
           <path d="M-8,-5 Q-10,0 -8,3 Q-6,0 -8,-5Z" fill="#4fc3f7" opacity="0.5"/>
           <path d="M-5,-8 Q-7,-3 -5,0 Q-3,-3 -5,-8Z" fill="#4fc3f7" opacity="0.6"/>
-          <!-- Robinet symbolique -->
-          <path d="M-20,-8 L-14,-2" stroke="rgba(200,168,75,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="-20" cy="-8" r="3" fill="none" stroke="rgba(200,168,75,0.6)" stroke-width="1"/>
           <text x="0" y="46" font-family="Rajdhani,sans-serif" font-size="6" fill="rgba(200,168,75,0.8)" text-anchor="middle" letter-spacing="0.5">BRÛ</text>
         </g>
 
-        <!-- ─── BANDE DÉCO DORÉE HORIZONTALE ─── -->
         <line x1="30" y1="265" x2="550" y2="265" stroke="rgba(200,168,75,0.2)" stroke-width="0.8"/>
 
-        <!-- ─── ZONE CENTRALE POCHETTE : Logo + Destinataire ─── -->
-        <!-- Croix médicale centrale -->
-        <g transform="translate(290, 170)">
-          <circle cx="0" cy="0" r="40" fill="rgba(8,17,31,0.8)" stroke="#c8a84b" stroke-width="1.5"/>
-          <circle cx="0" cy="0" r="35" fill="rgba(8,17,31,0.8)" stroke="rgba(200,168,75,0.3)" stroke-width="0.8"/>
-          <rect x="-6" y="-22" width="12" height="44" rx="2" fill="#c0392b"/>
-          <rect x="-22" y="-6" width="44" height="12" rx="2" fill="#c0392b"/>
-          <circle cx="0" cy="0" r="8" fill="rgba(8,17,31,0.9)"/>
-          <circle cx="0" cy="0" r="5" fill="#c8a84b"/>
-        </g>
+        <!-- Logo SAMS centré -->
+        <image href="https://i.ibb.co/bjQ1hR9t/sams.png" x="262" y="128" width="56" height="56" preserveAspectRatio="xMidYMid meet" style="border-radius:50%"/>
 
-        <!-- Nom sur la pochette -->
         <text x="290" y="228" font-family="Playfair Display,Georgia,serif" font-size="13"
               fill="rgba(200,168,75,0.9)" text-anchor="middle" id="env-name-text" font-style="italic">
           — Attestation Personnelle —
         </text>
 
-        <!-- ─── ÉTIQUETTE BAS ─── -->
         <rect x="195" y="382" width="190" height="20" rx="2" fill="rgba(8,17,31,0.9)" stroke="rgba(200,168,75,0.4)" stroke-width="0.8"/>
         <text x="290" y="390" font-family="Rajdhani,sans-serif" font-size="5.5" fill="#c8a84b" text-anchor="middle" letter-spacing="2">SAN ANDREAS MEDICAL SERVICE</text>
         <text x="290" y="398" font-family="Rajdhani,sans-serif" font-size="4.5" fill="rgba(138,155,181,0.8)" text-anchor="middle" letter-spacing="1.5">FORMATION — CERTIFICATION — SECOURISME</text>
 
-        <!-- ─── BORDURES DORÉES ─── -->
         <rect x="20" y="100" width="540" height="300" rx="6" fill="none" stroke="url(#goldH)" stroke-width="1.5"/>
-        <!-- Coins décoratifs -->
         <g stroke="#c8a84b" stroke-width="1.2" fill="none" opacity="0.6">
-          <path d="M20,110 L20,100 L30,100"/>
-          <path d="M560,110 L560,100 L550,100"/>
-          <path d="M20,390 L20,400 L30,400"/>
-          <path d="M560,390 L560,400 L550,400"/>
+          <path d="M20,110 L20,100 L30,100"/><path d="M560,110 L560,100 L550,100"/>
+          <path d="M20,390 L20,400 L30,400"/><path d="M560,390 L560,400 L550,400"/>
         </g>
-
-        <!-- Ligne dorée décorative intérieure -->
         <rect x="28" y="108" width="524" height="284" rx="4" fill="none" stroke="rgba(200,168,75,0.15)" stroke-width="0.8"/>
 
-        <!-- ─── RABAT (FLAP) ─── -->
         <g class="env-flap">
-          <!-- Corps du rabat -->
-          <polygon points="20,100 290,248 560,100"
-                   fill="url(#envFlapGrad)" stroke="#c8a84b" stroke-width="1.5" stroke-linejoin="round"/>
-          <!-- Bande intérieure dorée -->
-          <polygon points="25,100 290,240 555,100"
-                   fill="none" stroke="rgba(200,168,75,0.2)" stroke-width="0.8" stroke-linejoin="round"/>
-
-          <!-- Dessin sur le rabat: étoile de vie -->
+          <polygon points="20,100 290,248 560,100" fill="url(#envFlapGrad)" stroke="#c8a84b" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="25,100 290,240 555,100" fill="none" stroke="rgba(200,168,75,0.2)" stroke-width="0.8" stroke-linejoin="round"/>
           <g transform="translate(290, 150)">
-            <!-- Étoile de vie stylisée -->
-            <path d="M0,-22 L5,-8 L20,-8 L9,2 L14,16 L0,8 L-14,16 L-9,2 L-20,-8 L-5,-8 Z"
-                  fill="none" stroke="rgba(200,168,75,0.5)" stroke-width="1" stroke-linejoin="round"/>
-            <!-- Croix centrale -->
+            <path d="M0,-22 L5,-8 L20,-8 L9,2 L14,16 L0,8 L-14,16 L-9,2 L-20,-8 L-5,-8 Z" fill="none" stroke="rgba(200,168,75,0.5)" stroke-width="1" stroke-linejoin="round"/>
             <line x1="0" y1="-6" x2="0" y2="6" stroke="rgba(200,168,75,0.8)" stroke-width="2" stroke-linecap="round"/>
             <line x1="-6" y1="0" x2="6" y2="0" stroke="rgba(200,168,75,0.8)" stroke-width="2" stroke-linecap="round"/>
           </g>
-
-          <!-- Cachet wax central sur le rabat -->
           <circle cx="290" cy="220" r="14" fill="#0a1628" stroke="#c8a84b" stroke-width="1.5"/>
           <circle cx="290" cy="220" r="11" fill="none" stroke="rgba(200,168,75,0.4)" stroke-width="0.8"/>
           <text x="290" y="218" font-family="Georgia,serif" font-size="7" fill="#c8a84b" text-anchor="middle" font-weight="bold">✦</text>
           <text x="290" y="227" font-family="Rajdhani,sans-serif" font-size="4.5" fill="#c8a84b" text-anchor="middle" letter-spacing="1">SAMS</text>
-
-          <!-- Lignes décoratives du rabat -->
           <line x1="100" y1="115" x2="290" y2="235" stroke="rgba(200,168,75,0.12)" stroke-width="0.8"/>
           <line x1="480" y1="115" x2="290" y2="235" stroke="rgba(200,168,75,0.12)" stroke-width="0.8"/>
-
-          <!-- Petit texte sur le rabat -->
           <text x="290" y="130" font-family="Rajdhani,sans-serif" font-size="7" fill="rgba(200,168,75,0.5)" text-anchor="middle" letter-spacing="3">CONFIDENTIEL</text>
-
-          <!-- Shine overlay -->
-          <polygon points="20,100 290,248 560,100" class="env-shine"
-                   fill="rgba(255,255,255,1)" stroke="none"/>
+          <polygon points="20,100 290,248 560,100" class="env-shine" fill="rgba(255,255,255,1)" stroke="none"/>
         </g>
 
-        <!-- ─── PULSE RING (bord clignotant) ─── -->
-        <rect x="20" y="100" width="540" height="300" rx="6" fill="none"
-              stroke="#c8a84b" stroke-width="1.5" class="env-pulse" opacity="0.5"/>
+        <rect x="20" y="100" width="540" height="300" rx="6" fill="none" stroke="#c8a84b" stroke-width="1.5" class="env-pulse" opacity="0.5"/>
       </svg>
     </div>
 
@@ -1099,7 +725,7 @@
 
       <div class="diploma-header">
         <div class="diploma-logo-left">
-          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width:58px;height:58px">
             <circle cx="30" cy="30" r="28" fill="none" stroke="#0a1628" stroke-width="1.5"/>
             <circle cx="30" cy="30" r="22" fill="none" stroke="#0a1628" stroke-width="0.8"/>
             <text x="30" y="18" font-family="Georgia,serif" font-size="4.5" fill="#0a1628" text-anchor="middle" letter-spacing="1">ÉTAT DE</text>
@@ -1113,35 +739,27 @@
         </div>
 
         <div class="diploma-title-block">
-          <div class="diploma-authority">San Andreas — Service Officiel</div>
-          <div class="diploma-main-title">ATTESTATION<br>DE FORMATION</div>
-          <div class="diploma-subtitle">Certificat de Compétences en Secourisme</div>
+          <div class="diploma-authority" id="dipl-authority-text">San Andreas — Service Officiel</div>
+          <div class="diploma-main-title" id="dipl-main-title-text">ATTESTATION<br>DE FORMATION</div>
+          <div class="diploma-subtitle" id="dipl-subtitle-text">Certificat de Compétences en Secourisme</div>
         </div>
 
         <div class="diploma-logo-right">
-          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="28" fill="none" stroke="#c0392b" stroke-width="1.5"/>
-            <circle cx="30" cy="30" r="22" fill="none" stroke="#c0392b" stroke-width="0.8"/>
-            <circle cx="30" cy="30" r="16" fill="#0a1628"/>
-            <rect x="26" y="18" width="8" height="24" rx="1.5" fill="#c0392b"/>
-            <rect x="18" y="26" width="24" height="8" rx="1.5" fill="#c0392b"/>
-            <circle cx="30" cy="30" r="4" fill="#0a1628"/>
-            <circle cx="30" cy="30" r="2.5" fill="#c8a84b"/>
-            <text x="30" y="54" font-family="Arial" font-size="5" fill="#c0392b" text-anchor="middle" font-weight="bold" letter-spacing="2">SAMS</text>
-          </svg>
+          <img src="https://i.ibb.co/bjQ1hR9t/sams.png" alt="SAMS" style="width:58px;height:58px;object-fit:contain;"
+               onerror="this.outerHTML='<svg viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\' style=\'width:58px;height:58px\'><circle cx=\'30\' cy=\'30\' r=\'28\' fill=\'none\' stroke=\'#c0392b\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'16\' fill=\'#0a1628\'/><rect x=\'26\' y=\'18\' width=\'8\' height=\'24\' rx=\'1.5\' fill=\'#c0392b\'/><rect x=\'18\' y=\'26\' width=\'24\' height=\'8\' rx=\'1.5\' fill=\'#c0392b\'/><circle cx=\'30\' cy=\'30\' r=\'2.5\' fill=\'#c8a84b\'/><text x=\'30\' y=\'54\' font-family=\'Arial\' font-size=\'5\' fill=\'#c0392b\' text-anchor=\'middle\' font-weight=\'bold\' letter-spacing=\'2\'>SAMS</text></svg>'">
           <div class="diploma-logo-right-text">San Andreas<br>Medical<br>Service</div>
         </div>
       </div>
 
       <div class="diploma-line"></div>
 
-      <div class="diploma-certifie">
+      <div class="diploma-certifie" id="dipl-certifie-text">
         Le San Andreas Medical Service et le Ministère de la Santé Publique certifient que
       </div>
 
       <div class="diploma-name" id="diploma-name-display">Prénom NOM</div>
 
-      <div class="diploma-corps">
+      <div class="diploma-corps" id="dipl-corps-text">
         a suivi et validé avec succès l'ensemble des modules de la formation dispensée par le
         San Andreas Medical Service, répondant aux exigences réglementaires en vigueur
         au sein de l'État de San Andreas en matière de secourisme et de premiers secours.
@@ -1152,7 +770,7 @@
         <div class="diploma-formation-name" id="diploma-formation-display">Formation aux Premiers Secours — Niveau 1</div>
       </div>
 
-      <div class="diploma-corps" style="font-size:0.88rem;">
+      <div class="diploma-corps" id="dipl-corps2-text" style="font-size:0.88rem;">
         Le titulaire de la présente attestation est habilité à exercer les gestes de premiers secours
         conformément aux protocoles en vigueur du SAMS. Ce document est délivré à titre officiel
         et engage la responsabilité du service émetteur.
@@ -1163,8 +781,8 @@
       <div class="diploma-footer">
         <div class="diploma-sig">
           <div class="diploma-sig-line"></div>
-          <div class="diploma-sig-name">Dr. Michael Torres</div>
-          <div class="diploma-sig-title">Directeur Médical — SAMS</div>
+          <div class="diploma-sig-name" id="sig1-name-disp">Dr. Michael Torres</div>
+          <div class="diploma-sig-title" id="sig1-title-disp">Directeur Médical — SAMS</div>
         </div>
         <div class="diploma-date-block">
           <div class="diploma-date-label">Délivré le</div>
@@ -1176,8 +794,8 @@
         </div>
         <div class="diploma-sig">
           <div class="diploma-sig-line"></div>
-          <div class="diploma-sig-name">Cmdt. Sarah Brennan</div>
-          <div class="diploma-sig-title">Chef de Formation — SAMS</div>
+          <div class="diploma-sig-name" id="sig2-name-disp">Cmdt. Sarah Brennan</div>
+          <div class="diploma-sig-title" id="sig2-title-disp">Chef de Formation — SAMS</div>
         </div>
       </div>
     </div>
@@ -1207,6 +825,7 @@
         <button class="admin-tab active" data-tab="config" onclick="switchTab('config')">⚙ Base de données</button>
         <button class="admin-tab" data-tab="generate" onclick="switchTab('generate')">Nouveau Diplômé</button>
         <button class="admin-tab" data-tab="liste" onclick="switchTab('liste')">Liste</button>
+        <button class="admin-tab" data-tab="custom" onclick="switchTab('custom')">✦ Personnalisation</button>
       </div>
 
       <!-- Tab: Config Supabase -->
@@ -1217,7 +836,6 @@
             Renseignez une seule fois vos identifiants Supabase. Ils seront utilisés pour toutes les connexions à la base de données partagée.
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">URL du projet Supabase</label>
           <input type="text" class="form-input" id="sb-url" placeholder="https://xxxxxxxxxxxx.supabase.co">
@@ -1228,11 +846,8 @@
           <input type="password" class="form-input" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
           <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.3rem;">Projet → Settings → API → anon public key</div>
         </div>
-
         <button class="generate-btn" onclick="saveSupabaseConfig()" id="config-save-btn">Connecter à Supabase</button>
-
         <div id="config-status" style="margin-top:1rem; display:none;"></div>
-
         <div style="margin-top:1.5rem; padding:1rem; background:rgba(0,0,0,0.3); border-radius:4px; border:1px solid rgba(255,255,255,0.06);">
           <div style="font-family:'Rajdhani',sans-serif; font-size:0.6rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.8rem;">📋 SQL à exécuter dans Supabase (une seule fois)</div>
           <pre id="sql-snippet" style="font-family:monospace; font-size:0.7rem; color:#a8d8a8; background:rgba(0,0,0,0.4); padding:0.8rem; border-radius:3px; overflow-x:auto; white-space:pre-wrap; cursor:pointer;" onclick="copySql()" title="Cliquer pour copier">CREATE TABLE IF NOT EXISTS diplomes (
@@ -1245,7 +860,6 @@
   created_at BIGINT NOT NULL
 );
 
--- Autoriser lecture/écriture publique (anon key)
 ALTER TABLE diplomes ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "allow_all" ON diplomes FOR ALL USING (true) WITH CHECK (true);</pre>
           <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.4rem;">↑ Cliquez pour copier — à coller dans Supabase → SQL Editor</div>
@@ -1277,7 +891,6 @@ CREATE POLICY "allow_all" ON diplomes FOR ALL USING (true) WITH CHECK (true);</p
           </select>
         </div>
         <button class="generate-btn" id="gen-btn" onclick="generateDiplome()">Enregistrer &amp; Générer le code</button>
-
         <div class="generated-result-box" id="result-box">
           <div class="result-row">
             <div class="result-label">Code d'accès</div>
@@ -1316,6 +929,92 @@ CREATE POLICY "allow_all" ON diplomes FOR ALL USING (true) WITH CHECK (true);</p
           </table>
         </div>
       </div>
+
+      <!-- Tab: Personnalisation -->
+      <div id="tab-custom" class="tab-content">
+        <div style="margin-bottom:1.2rem; padding:1rem; background:rgba(200,168,75,0.06); border:1px solid rgba(200,168,75,0.2); border-radius:4px;">
+          <div style="font-family:'Rajdhani',sans-serif; font-size:0.62rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.4rem;">Personnalisation du diplôme</div>
+          <div style="font-family:'Crimson Pro',serif; font-size:0.85rem; color:var(--grey); line-height:1.6;">
+            Modifiez les textes et signataires. Les changements s'appliquent à tous les diplômes générés.
+            <span class="preview-badge" onclick="previewCustom()">Aperçu en direct</span>
+          </div>
+        </div>
+
+        <!-- Signataires -->
+        <div class="custom-section-title">Signataires</div>
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-block-title">Signataire 1 (gauche)</div>
+            <div class="form-group">
+              <label class="form-label">Nom &amp; Titre</label>
+              <input type="text" class="form-input" id="c-sig1-name" placeholder="Dr. Michael Torres">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fonction</label>
+              <input type="text" class="form-input" id="c-sig1-title" placeholder="Directeur Médical — SAMS">
+            </div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-block-title">Signataire 2 (droite)</div>
+            <div class="form-group">
+              <label class="form-label">Nom &amp; Titre</label>
+              <input type="text" class="form-input" id="c-sig2-name" placeholder="Cmdt. Sarah Brennan">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fonction</label>
+              <input type="text" class="form-input" id="c-sig2-title" placeholder="Chef de Formation — SAMS">
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Entête du diplôme -->
+        <div class="custom-section-title">En-tête du document</div>
+        <div class="form-group">
+          <label class="form-label">Autorité (ligne rouge en haut)</label>
+          <input type="text" class="form-input" id="c-authority" placeholder="San Andreas — Service Officiel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titre principal du document</label>
+          <input type="text" class="form-input" id="c-main-title" placeholder="ATTESTATION DE FORMATION">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.3rem;">Utilisez " | " pour un saut de ligne (ex: ATTESTATION | DE FORMATION)</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sous-titre</label>
+          <input type="text" class="form-input" id="c-subtitle" placeholder="Certificat de Compétences en Secourisme">
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Corps du texte -->
+        <div class="custom-section-title">Corps du diplôme</div>
+        <div class="form-group">
+          <label class="form-label">Phrase d'introduction (avant le nom)</label>
+          <input type="text" class="form-input" id="c-certifie" placeholder="Le San Andreas Medical Service et le Ministère de la Santé Publique certifient que">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Paragraphe principal (après le nom)</label>
+          <textarea class="form-input" id="c-corps" rows="3" style="resize:vertical; font-family:'Crimson Pro',serif; font-size:0.95rem;" placeholder="a suivi et validé avec succès l'ensemble des modules..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Paragraphe de bas de document</label>
+          <textarea class="form-input" id="c-corps2" rows="3" style="resize:vertical; font-family:'Crimson Pro',serif; font-size:0.95rem;" placeholder="Le titulaire de la présente attestation est habilité à..."></textarea>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Mot de passe admin -->
+        <div class="custom-section-title">Sécurité</div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe Admin (actuel : affiché masqué)</label>
+          <input type="password" class="form-input" id="c-admin-pw" placeholder="Nouveau mot de passe admin...">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.3rem;">Laissez vide pour conserver l'actuel. Ce code donne accès au panel admin depuis la page de connexion.</div>
+        </div>
+
+        <button class="save-custom-btn" onclick="saveCustomization()">✦ Enregistrer la personnalisation</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1324,20 +1023,57 @@ CREATE POLICY "allow_all" ON diplomes FOR ALL USING (true) WITH CHECK (true);</p
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // ════════════════════════════════════════════════════════
-//  CONFIG
+//  CONFIG — modifiable via le panel de personnalisation
 // ════════════════════════════════════════════════════════
-const ADMIN_PASSWORD = "SAMS2025"; // ← Changez ce mot de passe admin
-const SB_CONFIG_KEY  = "sams_sb_config"; // clé sessionStorage (session uniquement)
+const DEFAULT_ADMIN_PW = "SAMS2025";
+const SB_CONFIG_KEY    = "sams_sb_config";
+const CUSTOM_KEY       = "sams_custom";
+
+// ── Charger la personnalisation sauvegardée ──────────
+function getCustom() {
+  try { return JSON.parse(localStorage.getItem(CUSTOM_KEY) || 'null') || {}; } catch { return {}; }
+}
+function saveCustom(obj) {
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(obj));
+}
+
+// Applique la personnalisation au diplôme
+function applyCustomToDiploma(c) {
+  if (!c) return;
+  if (c.sig1Name)    document.getElementById('sig1-name-disp').textContent    = c.sig1Name;
+  if (c.sig1Title)   document.getElementById('sig1-title-disp').textContent   = c.sig1Title;
+  if (c.sig2Name)    document.getElementById('sig2-name-disp').textContent    = c.sig2Name;
+  if (c.sig2Title)   document.getElementById('sig2-title-disp').textContent   = c.sig2Title;
+  if (c.authority)   document.getElementById('dipl-authority-text').textContent = c.authority;
+  if (c.mainTitle) {
+    const html = c.mainTitle.replace(' | ', '<br>');
+    document.getElementById('dipl-main-title-text').innerHTML = html;
+  }
+  if (c.subtitle)    document.getElementById('dipl-subtitle-text').textContent  = c.subtitle;
+  if (c.certifie)    document.getElementById('dipl-certifie-text').textContent  = c.certifie;
+  if (c.corps)       document.getElementById('dipl-corps-text').textContent     = c.corps;
+  if (c.corps2)      document.getElementById('dipl-corps2-text').textContent    = c.corps2;
+}
+
+// Initialisation au chargement
+window.addEventListener('DOMContentLoaded', () => {
+  applyCustomToDiploma(getCustom());
+  document.getElementById('pw-input').focus();
+});
+
+// ── Récupérer le mot de passe admin courant ──────────
+function getAdminPw() {
+  const c = getCustom();
+  return c.adminPw || DEFAULT_ADMIN_PW;
+}
 
 // ════════════════════════════════════════════════════════
-//  SUPABASE CONFIG — sauvegardée en sessionStorage
-//  (jamais dans le code, jamais dans localStorage)
+//  SUPABASE CONFIG
 // ════════════════════════════════════════════════════════
 function getSbConfig() {
   try { return JSON.parse(sessionStorage.getItem(SB_CONFIG_KEY) || 'null'); } catch { return null; }
 }
 function setSbConfig(url, key) {
-  // Nettoyage URL
   url = url.trim().replace(/\/$/, '');
   key = key.trim();
   sessionStorage.setItem(SB_CONFIG_KEY, JSON.stringify({ url, key }));
@@ -1347,13 +1083,9 @@ function isConfigured() {
   return c && c.url && c.key;
 }
 
-// ════════════════════════════════════════════════════════
-//  API REST SUPABASE (sans SDK — fetch natif)
-// ════════════════════════════════════════════════════════
 async function sbRequest(method, path, body = null) {
   const cfg = getSbConfig();
   if (!cfg) throw new Error('Supabase non configuré');
-
   const opts = {
     method,
     headers: {
@@ -1364,32 +1096,17 @@ async function sbRequest(method, path, body = null) {
     }
   };
   if (body) opts.body = JSON.stringify(body);
-
   const res = await fetch(`${cfg.url}/rest/v1/${path}`, opts);
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase ${res.status}: ${err}`);
-  }
-  // DELETE retourne 204 sans body
+  if (!res.ok) { const err = await res.text(); throw new Error(`Supabase ${res.status}: ${err}`); }
   if (res.status === 204) return [];
   return res.json();
 }
 
-async function dbGetAll() {
-  return sbRequest('GET', 'diplomes?select=*&order=created_at.desc');
-}
-
-async function dbInsert(entry) {
-  return sbRequest('POST', 'diplomes', entry);
-}
-
-async function dbDelete(id) {
-  return sbRequest('DELETE', `diplomes?id=eq.${encodeURIComponent(id)}`);
-}
-
-async function dbFindByPassword(pw) {
-  const rows = await sbRequest('GET',
-    `diplomes?select=*&password=ilike.${encodeURIComponent(pw.trim())}&limit=1`);
+async function dbGetAll()             { return sbRequest('GET', 'diplomes?select=*&order=created_at.desc'); }
+async function dbInsert(entry)        { return sbRequest('POST', 'diplomes', entry); }
+async function dbDelete(id)           { return sbRequest('DELETE', `diplomes?id=eq.${encodeURIComponent(id)}`); }
+async function dbFindByPassword(pw)   {
+  const rows = await sbRequest('GET', `diplomes?select=*&password=ilike.${encodeURIComponent(pw.trim())}&limit=1`);
   return rows && rows.length > 0 ? rows[0] : null;
 }
 
@@ -1399,90 +1116,58 @@ async function dbFindByPassword(pw) {
 async function saveSupabaseConfig() {
   const url = document.getElementById('sb-url').value.trim();
   const key = document.getElementById('sb-key').value.trim();
-  const statusEl = document.getElementById('config-status');
   const btn = document.getElementById('config-save-btn');
-
-  if (!url || !key) {
-    showConfigStatus('error', 'Veuillez renseigner l\'URL et la clé API');
-    return;
-  }
-
-  btn.textContent = 'Test de connexion…';
-  btn.disabled = true;
-  statusEl.style.display = 'none';
-
-  // Sauvegarder temporairement pour tester
+  if (!url || !key) { showConfigStatus('error', 'Veuillez renseigner l\'URL et la clé API'); return; }
+  btn.textContent = 'Test de connexion…'; btn.disabled = true;
+  document.getElementById('config-status').style.display = 'none';
   setSbConfig(url, key);
-
   try {
-    // Test: tenter un SELECT sur la table
     await dbGetAll();
     showConfigStatus('success', '✓ Connexion réussie — base de données opérationnelle');
     showNotification('✓ Supabase connecté !');
-    // Pré-remplir les champs avec les valeurs sauvegardées (masquées)
-    document.getElementById('sb-key').value = key;
   } catch (e) {
-    showConfigStatus('error', `Erreur de connexion : ${e.message}. Vérifiez l'URL et la clé, et assurez-vous que la table "diplomes" existe.`);
-    // Effacer la config invalide
+    showConfigStatus('error', `Erreur : ${e.message}`);
     sessionStorage.removeItem(SB_CONFIG_KEY);
   }
-
-  btn.textContent = 'Connecter à Supabase';
-  btn.disabled = false;
+  btn.textContent = 'Connecter à Supabase'; btn.disabled = false;
 }
 
 function showConfigStatus(type, msg) {
   const el = document.getElementById('config-status');
   el.style.display = 'block';
-  el.style.padding = '0.8rem 1rem';
-  el.style.borderRadius = '3px';
-  el.style.fontFamily = "'Rajdhani', sans-serif";
-  el.style.fontSize = '0.7rem';
-  el.style.letterSpacing = '0.08em';
-  el.style.lineHeight = '1.5';
-
+  el.style.cssText += `;padding:.8rem 1rem;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:.08em;line-height:1.5;`;
   if (type === 'success') {
-    el.style.background = 'rgba(39,174,96,0.12)';
-    el.style.border = '1px solid rgba(39,174,96,0.3)';
-    el.style.color = '#2ecc71';
+    el.style.background = 'rgba(39,174,96,0.12)'; el.style.border = '1px solid rgba(39,174,96,0.3)'; el.style.color = '#2ecc71';
   } else {
-    el.style.background = 'rgba(192,57,43,0.12)';
-    el.style.border = '1px solid rgba(192,57,43,0.3)';
-    el.style.color = '#e88';
+    el.style.background = 'rgba(192,57,43,0.12)'; el.style.border = '1px solid rgba(192,57,43,0.3)'; el.style.color = '#e88';
   }
   el.textContent = msg;
 }
 
 function copySql() {
-  const sql = document.getElementById('sql-snippet').textContent;
-  navigator.clipboard.writeText(sql).then(() => showNotification('SQL copié !'));
+  navigator.clipboard.writeText(document.getElementById('sql-snippet').textContent).then(() => showNotification('SQL copié !'));
 }
 
 // ════════════════════════════════════════════════════════
-//  VÉRIFICATION MOT DE PASSE (page d'accueil)
+//  VÉRIFICATION MOT DE PASSE
+//  ► Code admin → panel admin
+//  ► Code SAMS-XXXXX → diplôme utilisateur
 // ════════════════════════════════════════════════════════
 async function checkPassword() {
   const val = document.getElementById('pw-input').value.trim();
-  const btn  = document.querySelector('.pw-btn');
-
+  const btn = document.querySelector('.pw-btn');
   if (!val) { showPwError("Veuillez saisir votre code d'accès"); return; }
 
-  // Code ADMIN
-  if (val === ADMIN_PASSWORD) {
+  // ── Accès Admin via champ mot de passe ──
+  if (val === getAdminPw()) {
     document.getElementById('password-page').style.display = 'none';
     openAdmin();
     return;
   }
 
-  // Vérifier si Supabase est configuré
-  if (!isConfigured()) {
-    showPwError('Le service est en cours de configuration — réessayez plus tard');
-    return;
-  }
+  if (!isConfigured()) { showPwError('Le service est en cours de configuration — réessayez plus tard'); return; }
 
-  btn.textContent = 'Vérification…';
-  btn.disabled = true;
-
+  btn.textContent = 'Vérification…'; btn.disabled = true;
   try {
     const entry = await dbFindByPassword(val);
     if (entry) {
@@ -1496,11 +1181,8 @@ async function checkPassword() {
     }
   } catch (e) {
     showPwError('Erreur de connexion à la base de données');
-    console.error(e);
   }
-
-  btn.textContent = 'Accéder à ma pochette';
-  btn.disabled = false;
+  btn.textContent = 'Accéder à ma pochette'; btn.disabled = false;
 }
 
 function showPwError(msg) {
@@ -1511,14 +1193,12 @@ function showPwError(msg) {
 }
 
 // ════════════════════════════════════════════════════════
-//  LANDING — POCHETTE
+//  LANDING + DIPLÔME
 // ════════════════════════════════════════════════════════
 function showLanding(entry) {
   document.getElementById('landing').classList.add('active');
-  document.getElementById('envelope-owner-label').textContent =
-    `Pochette de ${entry.prenom} ${entry.nom.toUpperCase()}`;
-  document.getElementById('env-name-text').textContent =
-    `${entry.prenom} ${entry.nom.toUpperCase()}`;
+  document.getElementById('envelope-owner-label').textContent = `Pochette de ${entry.prenom} ${entry.nom.toUpperCase()}`;
+  document.getElementById('env-name-text').textContent = `${entry.prenom} ${entry.nom.toUpperCase()}`;
   window._currentEntry = entry;
 }
 
@@ -1530,12 +1210,13 @@ function openEnvelope() {
 }
 
 function showDiploma(prenom, nom, formation, id, date) {
+  applyCustomToDiploma(getCustom()); // Appliquer la custom avant affichage
   const page = document.getElementById('diploma-page');
   page.classList.add('active');
-  document.getElementById('diploma-name-display').textContent    = prenom + ' ' + nom.toUpperCase();
+  document.getElementById('diploma-name-display').textContent     = prenom + ' ' + nom.toUpperCase();
   document.getElementById('diploma-formation-display').textContent = formation;
-  document.getElementById('diploma-date-display').textContent    = date;
-  document.getElementById('diploma-num-display').textContent     = id;
+  document.getElementById('diploma-date-display').textContent     = date;
+  document.getElementById('diploma-num-display').textContent      = id;
   window._currentDiploma = { prenom, nom, formation, id, date };
 }
 
@@ -1549,14 +1230,13 @@ function closeDiploma() {
 // ════════════════════════════════════════════════════════
 async function downloadDiplomaPDF() {
   const btn = document.querySelector('.download-btn');
-  btn.textContent = 'Génération en cours…';
-  btn.disabled = true;
+  btn.textContent = 'Génération en cours…'; btn.disabled = true;
   try {
-    const card   = document.getElementById('diploma-card');
+    const card = document.getElementById('diploma-card');
     const canvas = await html2canvas(card, { scale: 3, useCORS: true, backgroundColor: '#f9f4e8', logging: false });
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
     const { jsPDF } = window.jspdf;
-    const pdf  = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
     const pdfW = pdf.internal.pageSize.getWidth();
     const pdfH = pdf.internal.pageSize.getHeight();
     const ratio = canvas.width / canvas.height;
@@ -1567,7 +1247,6 @@ async function downloadDiplomaPDF() {
     pdf.save(`Diplome_SAMS_${d.prenom || 'diplome'}_${d.nom || ''}.pdf`.replace(/\s+/g, '_'));
   } catch (e) {
     showNotification('Erreur lors de la génération PDF');
-    console.error(e);
   }
   btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Télécharger en PDF`;
   btn.disabled = false;
@@ -1589,31 +1268,93 @@ function secretClick() {
 // ════════════════════════════════════════════════════════
 function openAdmin() {
   document.getElementById('admin-overlay').classList.add('active');
-  // Si déjà configuré, pré-remplir l'URL (pas la clé pour sécurité)
   const cfg = getSbConfig();
   if (cfg && cfg.url) {
     document.getElementById('sb-url').value = cfg.url;
     showConfigStatus('success', '✓ Supabase connecté et opérationnel');
     document.getElementById('config-status').style.display = 'block';
   }
+  loadCustomFields();
 }
 
 function closeAdmin() {
   document.getElementById('admin-overlay').classList.remove('active');
 }
 
-// BUG FIX: switchTab sans paramètre "el"
 function switchTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-
-  if (tab === 'generate') {
-    const warn = document.getElementById('db-warning');
-    warn.style.display = isConfigured() ? 'none' : 'block';
-  }
+  if (tab === 'generate') document.getElementById('db-warning').style.display = isConfigured() ? 'none' : 'block';
   if (tab === 'liste') refreshDiplomesList();
+  if (tab === 'custom') loadCustomFields();
+}
+
+// ── Personnalisation ─────────────────────────────────
+function loadCustomFields() {
+  const c = getCustom();
+  document.getElementById('c-sig1-name').value  = c.sig1Name  || 'Dr. Michael Torres';
+  document.getElementById('c-sig1-title').value = c.sig1Title || 'Directeur Médical — SAMS';
+  document.getElementById('c-sig2-name').value  = c.sig2Name  || 'Cmdt. Sarah Brennan';
+  document.getElementById('c-sig2-title').value = c.sig2Title || 'Chef de Formation — SAMS';
+  document.getElementById('c-authority').value  = c.authority || 'San Andreas — Service Officiel';
+  document.getElementById('c-main-title').value = c.mainTitle || 'ATTESTATION | DE FORMATION';
+  document.getElementById('c-subtitle').value   = c.subtitle  || 'Certificat de Compétences en Secourisme';
+  document.getElementById('c-certifie').value   = c.certifie  || 'Le San Andreas Medical Service et le Ministère de la Santé Publique certifient que';
+  document.getElementById('c-corps').value      = c.corps     || "a suivi et validé avec succès l'ensemble des modules de la formation dispensée par le San Andreas Medical Service, répondant aux exigences réglementaires en vigueur au sein de l'État de San Andreas en matière de secourisme et de premiers secours.";
+  document.getElementById('c-corps2').value     = c.corps2    || "Le titulaire de la présente attestation est habilité à exercer les gestes de premiers secours conformément aux protocoles en vigueur du SAMS. Ce document est délivré à titre officiel et engage la responsabilité du service émetteur.";
+  document.getElementById('c-admin-pw').value   = '';
+}
+
+function saveCustomization() {
+  const c = getCustom();
+  const newPw = document.getElementById('c-admin-pw').value.trim();
+
+  const updated = {
+    ...c,
+    sig1Name:  document.getElementById('c-sig1-name').value.trim()  || c.sig1Name,
+    sig1Title: document.getElementById('c-sig1-title').value.trim() || c.sig1Title,
+    sig2Name:  document.getElementById('c-sig2-name').value.trim()  || c.sig2Name,
+    sig2Title: document.getElementById('c-sig2-title').value.trim() || c.sig2Title,
+    authority: document.getElementById('c-authority').value.trim()  || c.authority,
+    mainTitle: document.getElementById('c-main-title').value.trim() || c.mainTitle,
+    subtitle:  document.getElementById('c-subtitle').value.trim()   || c.subtitle,
+    certifie:  document.getElementById('c-certifie').value.trim()   || c.certifie,
+    corps:     document.getElementById('c-corps').value.trim()      || c.corps,
+    corps2:    document.getElementById('c-corps2').value.trim()     || c.corps2,
+  };
+  if (newPw) updated.adminPw = newPw;
+
+  saveCustom(updated);
+  applyCustomToDiploma(updated);
+  showNotification('✓ Personnalisation enregistrée');
+  document.getElementById('c-admin-pw').value = '';
+}
+
+function previewCustom() {
+  // Construire un faux diplôme de preview et fermer admin
+  const tmp = {
+    sig1Name:  document.getElementById('c-sig1-name').value.trim()  || 'Dr. Michael Torres',
+    sig1Title: document.getElementById('c-sig1-title').value.trim() || 'Directeur Médical — SAMS',
+    sig2Name:  document.getElementById('c-sig2-name').value.trim()  || 'Cmdt. Sarah Brennan',
+    sig2Title: document.getElementById('c-sig2-title').value.trim() || 'Chef de Formation — SAMS',
+    authority: document.getElementById('c-authority').value.trim()  || 'San Andreas — Service Officiel',
+    mainTitle: document.getElementById('c-main-title').value.trim() || 'ATTESTATION | DE FORMATION',
+    subtitle:  document.getElementById('c-subtitle').value.trim()   || 'Certificat de Compétences en Secourisme',
+    certifie:  document.getElementById('c-certifie').value.trim()   || '',
+    corps:     document.getElementById('c-corps').value.trim()      || '',
+    corps2:    document.getElementById('c-corps2').value.trim()     || '',
+  };
+  applyCustomToDiploma(tmp);
+  closeAdmin();
+  document.getElementById('password-page').style.display = 'none';
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('diploma-name-display').textContent     = 'Prénom APERÇU';
+  document.getElementById('diploma-formation-display').textContent = 'Formation aux Premiers Secours — Niveau 1';
+  document.getElementById('diploma-date-display').textContent     = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('diploma-num-display').textContent      = 'DIP-APERCU2025';
+  document.getElementById('diploma-page').classList.add('active');
 }
 
 // ── Générer un diplômé ──────────────────────────────
@@ -1625,72 +1366,46 @@ function generatePassword() {
 }
 
 async function generateDiplome() {
-  if (!isConfigured()) {
-    showNotification('⚠ Configurez d\'abord Supabase (onglet Base de données)');
-    switchTab('config');
-    return;
-  }
-
+  if (!isConfigured()) { showNotification('⚠ Configurez d\'abord Supabase (onglet Base de données)'); switchTab('config'); return; }
   const prenom    = document.getElementById('admin-prenom').value.trim();
   const nom       = document.getElementById('admin-nom').value.trim();
   const formation = document.getElementById('admin-formation').value;
-
   if (!prenom || !nom) { showNotification('Prénom et nom requis'); return; }
-
   const btn = document.getElementById('gen-btn');
-  btn.textContent = 'Enregistrement…';
-  btn.disabled = true;
-
+  btn.textContent = 'Enregistrement…'; btn.disabled = true;
   const entry = {
     id:              'DIP-' + Date.now().toString(36).toUpperCase(),
-    prenom,
-    nom,
-    formation,
+    prenom, nom, formation,
     date_delivrance: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }),
     password:        generatePassword(),
     created_at:      Date.now()
   };
-
   try {
     await dbInsert(entry);
-
     document.getElementById('result-password').textContent = entry.password;
     document.getElementById('result-link').textContent = window.location.origin + window.location.pathname;
     document.getElementById('result-box').classList.add('visible');
     showNotification(`✓ ${prenom} ${nom} enregistré dans Supabase`);
-
     document.getElementById('admin-prenom').value = '';
     document.getElementById('admin-nom').value = '';
   } catch (e) {
     showNotification('Erreur d\'insertion : ' + e.message);
-    console.error(e);
   }
-
-  btn.textContent = 'Enregistrer & Générer le code';
-  btn.disabled = false;
+  btn.textContent = 'Enregistrer & Générer le code'; btn.disabled = false;
 }
 
 function copyText(id) {
-  const text = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text).then(() => showNotification('Copié !'));
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => showNotification('Copié !'));
 }
 
 // ── Liste des diplômés ──────────────────────────────
 async function refreshDiplomesList() {
   const tbody = document.getElementById('diplomes-tbody');
   tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:var(--gold);font-style:normal;font-family:'Rajdhani',sans-serif;letter-spacing:0.1em;">Chargement…</td></tr>`;
-
-  if (!isConfigured()) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Supabase non configuré</td></tr>`;
-    return;
-  }
-
+  if (!isConfigured()) { tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Supabase non configuré</td></tr>`; return; }
   try {
     const rows = await dbGetAll();
-    if (!rows || rows.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Aucun diplômé enregistré</td></tr>`;
-      return;
-    }
+    if (!rows || rows.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Aucun diplômé enregistré</td></tr>`; return; }
     tbody.innerHTML = rows.map(e => `
       <tr>
         <td>${e.prenom} ${e.nom.toUpperCase()}</td>
@@ -1722,11 +1437,8 @@ async function previewFromAdmin(id) {
 
 async function removeEntry(id) {
   if (!confirm('Supprimer ce diplômé de la base Supabase ?')) return;
-  try {
-    await dbDelete(id);
-    refreshDiplomesList();
-    showNotification('Entrée supprimée');
-  } catch (e) { showNotification('Erreur de suppression : ' + e.message); }
+  try { await dbDelete(id); refreshDiplomesList(); showNotification('Entrée supprimée'); }
+  catch (e) { showNotification('Erreur de suppression : ' + e.message); }
 }
 
 // ════════════════════════════════════════════════════════
@@ -1736,20 +1448,16 @@ function showNotification(msg) {
   const ex = document.querySelector('.notification');
   if (ex) ex.remove();
   const n = document.createElement('div');
-  n.className = 'notification';
-  n.textContent = msg;
+  n.className = 'notification'; n.textContent = msg;
   document.body.appendChild(n);
   setTimeout(() => { n.style.opacity = '0'; n.style.transition = 'opacity 0.3s'; setTimeout(() => n.remove(), 300); }, 2800);
 }
 
 // ════════════════════════════════════════════════════════
-//  INIT
+//  EVENTS
 // ════════════════════════════════════════════════════════
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAdmin(); });
-document.getElementById('admin-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeAdmin();
-});
-document.getElementById('pw-input').focus();
+document.getElementById('admin-overlay').addEventListener('click', function(e) { if (e.target === this) closeAdmin(); });
 </script>
 </body>
 </html>
