@@ -1204,12 +1204,59 @@
     </div>
     <div class="admin-body">
       <div class="admin-tabs">
-        <button class="admin-tab active" data-tab="generate" onclick="switchTab('generate')">Générer un Diplômé</button>
-        <button class="admin-tab" data-tab="liste" onclick="switchTab('liste')">Liste des Diplômés</button>
+        <button class="admin-tab active" data-tab="config" onclick="switchTab('config')">⚙ Base de données</button>
+        <button class="admin-tab" data-tab="generate" onclick="switchTab('generate')">Nouveau Diplômé</button>
+        <button class="admin-tab" data-tab="liste" onclick="switchTab('liste')">Liste</button>
+      </div>
+
+      <!-- Tab: Config Supabase -->
+      <div id="tab-config" class="tab-content active">
+        <div style="margin-bottom:1.2rem; padding:1rem; background:rgba(200,168,75,0.06); border:1px solid rgba(200,168,75,0.2); border-radius:4px;">
+          <div style="font-family:'Rajdhani',sans-serif; font-size:0.62rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.5rem;">Configuration Supabase</div>
+          <div style="font-family:'Crimson Pro',serif; font-size:0.85rem; color:var(--grey); line-height:1.6;">
+            Renseignez une seule fois vos identifiants Supabase. Ils seront utilisés pour toutes les connexions à la base de données partagée.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">URL du projet Supabase</label>
+          <input type="text" class="form-input" id="sb-url" placeholder="https://xxxxxxxxxxxx.supabase.co">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.3rem;">Projet → Settings → API → Project URL</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Clé API (anon / public)</label>
+          <input type="password" class="form-input" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.3rem;">Projet → Settings → API → anon public key</div>
+        </div>
+
+        <button class="generate-btn" onclick="saveSupabaseConfig()" id="config-save-btn">Connecter à Supabase</button>
+
+        <div id="config-status" style="margin-top:1rem; display:none;"></div>
+
+        <div style="margin-top:1.5rem; padding:1rem; background:rgba(0,0,0,0.3); border-radius:4px; border:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:'Rajdhani',sans-serif; font-size:0.6rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.8rem;">📋 SQL à exécuter dans Supabase (une seule fois)</div>
+          <pre id="sql-snippet" style="font-family:monospace; font-size:0.7rem; color:#a8d8a8; background:rgba(0,0,0,0.4); padding:0.8rem; border-radius:3px; overflow-x:auto; white-space:pre-wrap; cursor:pointer;" onclick="copySql()" title="Cliquer pour copier">CREATE TABLE IF NOT EXISTS diplomes (
+  id TEXT PRIMARY KEY,
+  prenom TEXT NOT NULL,
+  nom TEXT NOT NULL,
+  formation TEXT NOT NULL,
+  date_delivrance TEXT NOT NULL,
+  password TEXT NOT NULL,
+  created_at BIGINT NOT NULL
+);
+
+-- Autoriser lecture/écriture publique (anon key)
+ALTER TABLE diplomes ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all" ON diplomes FOR ALL USING (true) WITH CHECK (true);</pre>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:0.58rem;letter-spacing:0.1em;color:var(--grey);margin-top:0.4rem;">↑ Cliquez pour copier — à coller dans Supabase → SQL Editor</div>
+        </div>
       </div>
 
       <!-- Tab: Générer -->
-      <div id="tab-generate" class="tab-content active">
+      <div id="tab-generate" class="tab-content">
+        <div id="db-warning" style="display:none; margin-bottom:1rem; padding:0.8rem; background:rgba(192,57,43,0.12); border:1px solid rgba(192,57,43,0.3); border-radius:3px; font-family:'Rajdhani',sans-serif; font-size:0.68rem; letter-spacing:0.1em; color:#e88; text-transform:uppercase;">
+          ⚠ Base de données non configurée — allez dans l'onglet "Base de données"
+        </div>
         <div class="form-group">
           <label class="form-label">Prénom</label>
           <input type="text" class="form-input" id="admin-prenom" placeholder="Ex : Jean">
@@ -1229,14 +1276,14 @@
             <option value="Formation Catastrophe &amp; Triage">Formation Catastrophe &amp; Triage</option>
           </select>
         </div>
-        <button class="generate-btn" onclick="generateDiplome()">Enregistrer & Générer le lien</button>
+        <button class="generate-btn" id="gen-btn" onclick="generateDiplome()">Enregistrer &amp; Générer le code</button>
 
         <div class="generated-result-box" id="result-box">
           <div class="result-row">
-            <div class="result-label">Mot de passe</div>
+            <div class="result-label">Code d'accès</div>
             <div>
-              <div class="pw-badge" id="result-password"></div>
-              <div class="copy-hint">↑ Mot de passe à envoyer à la personne</div>
+              <div class="pw-badge" id="result-password" onclick="copyText('result-password')" style="cursor:pointer"></div>
+              <div class="copy-hint">↑ Cliquez pour copier — à envoyer à la personne</div>
             </div>
           </div>
           <div class="result-row">
@@ -1247,7 +1294,7 @@
             </div>
           </div>
           <div style="margin-top:0.8rem; padding:0.8rem; background:rgba(200,168,75,0.08); border-radius:3px; font-family:'Rajdhani',sans-serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--grey); line-height:1.6;">
-            📋 Envoyez à la personne : le lien + son mot de passe. En arrivant sur le site, elle saisit son mot de passe pour accéder à sa pochette.
+            📋 Envoyez à la personne : le lien du site + son code d'accès personnel.
           </div>
         </div>
       </div>
@@ -1261,7 +1308,7 @@
                 <th>Nom complet</th>
                 <th>Formation</th>
                 <th>Date</th>
-                <th>MDP</th>
+                <th>Code</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -1276,92 +1323,184 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// ─── CONFIG ───────────────────────────────────────
-const ADMIN_PASSWORD = "SAMS2025";   // ← Changez ce mot de passe admin !
-const STORAGE_KEY = "sams_diplomes_v3";
+// ════════════════════════════════════════════════════════
+//  CONFIG
+// ════════════════════════════════════════════════════════
+const ADMIN_PASSWORD = "SAMS2025"; // ← Changez ce mot de passe admin
+const SB_CONFIG_KEY  = "sams_sb_config"; // clé sessionStorage (session uniquement)
 
-// ─── BASE DE DONNÉES PARTAGÉE (window.storage — partagée entre tous les utilisateurs) ────
-// Toutes les opérations sont async et utilisent shared=true pour être visibles par tous
-
-async function getDB() {
-  try {
-    const result = await window.storage.get(STORAGE_KEY, true);
-    return result ? JSON.parse(result.value) : [];
-  } catch {
-    return [];
-  }
+// ════════════════════════════════════════════════════════
+//  SUPABASE CONFIG — sauvegardée en sessionStorage
+//  (jamais dans le code, jamais dans localStorage)
+// ════════════════════════════════════════════════════════
+function getSbConfig() {
+  try { return JSON.parse(sessionStorage.getItem(SB_CONFIG_KEY) || 'null'); } catch { return null; }
+}
+function setSbConfig(url, key) {
+  // Nettoyage URL
+  url = url.trim().replace(/\/$/, '');
+  key = key.trim();
+  sessionStorage.setItem(SB_CONFIG_KEY, JSON.stringify({ url, key }));
+}
+function isConfigured() {
+  const c = getSbConfig();
+  return c && c.url && c.key;
 }
 
-async function saveDB(data) {
+// ════════════════════════════════════════════════════════
+//  API REST SUPABASE (sans SDK — fetch natif)
+// ════════════════════════════════════════════════════════
+async function sbRequest(method, path, body = null) {
+  const cfg = getSbConfig();
+  if (!cfg) throw new Error('Supabase non configuré');
+
+  const opts = {
+    method,
+    headers: {
+      'apikey': cfg.key,
+      'Authorization': `Bearer ${cfg.key}`,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=representation' : ''
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+
+  const res = await fetch(`${cfg.url}/rest/v1/${path}`, opts);
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase ${res.status}: ${err}`);
+  }
+  // DELETE retourne 204 sans body
+  if (res.status === 204) return [];
+  return res.json();
+}
+
+async function dbGetAll() {
+  return sbRequest('GET', 'diplomes?select=*&order=created_at.desc');
+}
+
+async function dbInsert(entry) {
+  return sbRequest('POST', 'diplomes', entry);
+}
+
+async function dbDelete(id) {
+  return sbRequest('DELETE', `diplomes?id=eq.${encodeURIComponent(id)}`);
+}
+
+async function dbFindByPassword(pw) {
+  const rows = await sbRequest('GET',
+    `diplomes?select=*&password=ilike.${encodeURIComponent(pw.trim())}&limit=1`);
+  return rows && rows.length > 0 ? rows[0] : null;
+}
+
+// ════════════════════════════════════════════════════════
+//  PANEL CONFIG SUPABASE
+// ════════════════════════════════════════════════════════
+async function saveSupabaseConfig() {
+  const url = document.getElementById('sb-url').value.trim();
+  const key = document.getElementById('sb-key').value.trim();
+  const statusEl = document.getElementById('config-status');
+  const btn = document.getElementById('config-save-btn');
+
+  if (!url || !key) {
+    showConfigStatus('error', 'Veuillez renseigner l\'URL et la clé API');
+    return;
+  }
+
+  btn.textContent = 'Test de connexion…';
+  btn.disabled = true;
+  statusEl.style.display = 'none';
+
+  // Sauvegarder temporairement pour tester
+  setSbConfig(url, key);
+
   try {
-    await window.storage.set(STORAGE_KEY, JSON.stringify(data), true);
+    // Test: tenter un SELECT sur la table
+    await dbGetAll();
+    showConfigStatus('success', '✓ Connexion réussie — base de données opérationnelle');
+    showNotification('✓ Supabase connecté !');
+    // Pré-remplir les champs avec les valeurs sauvegardées (masquées)
+    document.getElementById('sb-key').value = key;
   } catch (e) {
-    console.error('Erreur sauvegarde DB:', e);
+    showConfigStatus('error', `Erreur de connexion : ${e.message}. Vérifiez l'URL et la clé, et assurez-vous que la table "diplomes" existe.`);
+    // Effacer la config invalide
+    sessionStorage.removeItem(SB_CONFIG_KEY);
   }
+
+  btn.textContent = 'Connecter à Supabase';
+  btn.disabled = false;
 }
 
-function generatePassword() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let pw = 'SAMS-';
-  for (let i = 0; i < 6; i++) pw += chars[Math.floor(Math.random() * chars.length)];
-  return pw;
+function showConfigStatus(type, msg) {
+  const el = document.getElementById('config-status');
+  el.style.display = 'block';
+  el.style.padding = '0.8rem 1rem';
+  el.style.borderRadius = '3px';
+  el.style.fontFamily = "'Rajdhani', sans-serif";
+  el.style.fontSize = '0.7rem';
+  el.style.letterSpacing = '0.08em';
+  el.style.lineHeight = '1.5';
+
+  if (type === 'success') {
+    el.style.background = 'rgba(39,174,96,0.12)';
+    el.style.border = '1px solid rgba(39,174,96,0.3)';
+    el.style.color = '#2ecc71';
+  } else {
+    el.style.background = 'rgba(192,57,43,0.12)';
+    el.style.border = '1px solid rgba(192,57,43,0.3)';
+    el.style.color = '#e88';
+  }
+  el.textContent = msg;
 }
 
-async function addEntry(prenom, nom, formation) {
-  const db = await getDB();
-  const id = 'DIP-' + Date.now().toString(36).toUpperCase();
-  const password = generatePassword();
-  const date = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-  const entry = { id, prenom, nom, formation, date, password, createdAt: Date.now() };
-  db.push(entry);
-  await saveDB(db);
-  return entry;
+function copySql() {
+  const sql = document.getElementById('sql-snippet').textContent;
+  navigator.clipboard.writeText(sql).then(() => showNotification('SQL copié !'));
 }
 
-async function deleteEntry(id) {
-  const db = await getDB();
-  await saveDB(db.filter(e => e.id !== id));
-}
-
-async function findByPassword(pw) {
-  const db = await getDB();
-  return db.find(e => e.password.toUpperCase() === pw.toUpperCase().trim());
-}
-
-// ─── VÉRIFICATION MOT DE PASSE ────────────────────
+// ════════════════════════════════════════════════════════
+//  VÉRIFICATION MOT DE PASSE (page d'accueil)
+// ════════════════════════════════════════════════════════
 async function checkPassword() {
   const val = document.getElementById('pw-input').value.trim();
-  const btn = document.querySelector('.pw-btn');
+  const btn  = document.querySelector('.pw-btn');
 
   if (!val) { showPwError("Veuillez saisir votre code d'accès"); return; }
 
-  // Désactiver le bouton pendant la recherche
-  btn.textContent = 'Vérification…';
-  btn.disabled = true;
-
-  // Mot de passe ADMIN → panel admin
+  // Code ADMIN
   if (val === ADMIN_PASSWORD) {
-    btn.textContent = 'Accéder à ma pochette';
-    btn.disabled = false;
     document.getElementById('password-page').style.display = 'none';
     openAdmin();
     return;
   }
 
-  // Chercher en DB partagée
-  const entry = await findByPassword(val);
+  // Vérifier si Supabase est configuré
+  if (!isConfigured()) {
+    showPwError('Le service est en cours de configuration — réessayez plus tard');
+    return;
+  }
+
+  btn.textContent = 'Vérification…';
+  btn.disabled = true;
+
+  try {
+    const entry = await dbFindByPassword(val);
+    if (entry) {
+      document.getElementById('pw-error').classList.remove('show');
+      document.getElementById('password-page').style.display = 'none';
+      showLanding(entry);
+    } else {
+      showPwError('Code incorrect — vérifiez votre code personnel');
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  } catch (e) {
+    showPwError('Erreur de connexion à la base de données');
+    console.error(e);
+  }
+
   btn.textContent = 'Accéder à ma pochette';
   btn.disabled = false;
-
-  if (entry) {
-    document.getElementById('pw-error').classList.remove('show');
-    document.getElementById('password-page').style.display = 'none';
-    showLanding(entry);
-  } else {
-    showPwError('Code incorrect — vérifiez votre code personnel');
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
-  }
 }
 
 function showPwError(msg) {
@@ -1371,10 +1510,11 @@ function showPwError(msg) {
   setTimeout(() => el.classList.remove('show'), 3500);
 }
 
-// ─── LANDING (pochette) ───────────────────────────
+// ════════════════════════════════════════════════════════
+//  LANDING — POCHETTE
+// ════════════════════════════════════════════════════════
 function showLanding(entry) {
-  const landing = document.getElementById('landing');
-  landing.classList.add('active');
+  document.getElementById('landing').classList.add('active');
   document.getElementById('envelope-owner-label').textContent =
     `Pochette de ${entry.prenom} ${entry.nom.toUpperCase()}`;
   document.getElementById('env-name-text').textContent =
@@ -1386,16 +1526,16 @@ function openEnvelope() {
   if (!window._currentEntry) { showNotification('Aucun diplôme associé'); return; }
   const e = window._currentEntry;
   document.getElementById('landing').classList.remove('active');
-  showDiploma(e.prenom, e.nom, e.formation, e.id, e.date);
+  showDiploma(e.prenom, e.nom, e.formation, e.id, e.date_delivrance);
 }
 
 function showDiploma(prenom, nom, formation, id, date) {
   const page = document.getElementById('diploma-page');
   page.classList.add('active');
-  document.getElementById('diploma-name-display').textContent = prenom + ' ' + nom.toUpperCase();
+  document.getElementById('diploma-name-display').textContent    = prenom + ' ' + nom.toUpperCase();
   document.getElementById('diploma-formation-display').textContent = formation;
-  document.getElementById('diploma-date-display').textContent = date;
-  document.getElementById('diploma-num-display').textContent = id;
+  document.getElementById('diploma-date-display').textContent    = date;
+  document.getElementById('diploma-num-display').textContent     = id;
   window._currentDiploma = { prenom, nom, formation, id, date };
 }
 
@@ -1404,31 +1544,38 @@ function closeDiploma() {
   document.getElementById('landing').classList.add('active');
 }
 
-// ─── PDF ──────────────────────────────────────────
+// ════════════════════════════════════════════════════════
+//  TÉLÉCHARGEMENT PDF
+// ════════════════════════════════════════════════════════
 async function downloadDiplomaPDF() {
   const btn = document.querySelector('.download-btn');
   btn.textContent = 'Génération en cours…';
   btn.disabled = true;
   try {
-    const card = document.getElementById('diploma-card');
+    const card   = document.getElementById('diploma-card');
     const canvas = await html2canvas(card, { scale: 3, useCORS: true, backgroundColor: '#f9f4e8', logging: false });
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const pdf  = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
     const pdfW = pdf.internal.pageSize.getWidth();
     const pdfH = pdf.internal.pageSize.getHeight();
     const ratio = canvas.width / canvas.height;
     let w = pdfW - 20, h = w / ratio;
     if (h > pdfH - 20) { h = pdfH - 20; w = h * ratio; }
-    pdf.addImage(imgData, 'JPEG', (pdfW-w)/2, (pdfH-h)/2, w, h);
+    pdf.addImage(imgData, 'JPEG', (pdfW - w) / 2, (pdfH - h) / 2, w, h);
     const d = window._currentDiploma || {};
-    pdf.save(`Diplome_SAMS_${d.prenom || 'diplome'}_${d.nom || ''}.pdf`.replace(/\s+/g,'_'));
-  } catch(e) { showNotification('Erreur lors de la génération PDF'); }
+    pdf.save(`Diplome_SAMS_${d.prenom || 'diplome'}_${d.nom || ''}.pdf`.replace(/\s+/g, '_'));
+  } catch (e) {
+    showNotification('Erreur lors de la génération PDF');
+    console.error(e);
+  }
   btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Télécharger en PDF`;
   btn.disabled = false;
 }
 
-// ─── SECRET TRIGGER ───────────────────────────────
+// ════════════════════════════════════════════════════════
+//  SECRET TRIGGER (5 clics coin bas-droit)
+// ════════════════════════════════════════════════════════
 let secretClicks = 0, secretTimer = null;
 function secretClick() {
   secretClicks++;
@@ -1437,48 +1584,90 @@ function secretClick() {
   if (secretClicks >= 5) { secretClicks = 0; openAdmin(); }
 }
 
-// ─── ADMIN ────────────────────────────────────────
+// ════════════════════════════════════════════════════════
+//  PANEL ADMIN
+// ════════════════════════════════════════════════════════
 function openAdmin() {
   document.getElementById('admin-overlay').classList.add('active');
-  refreshDiplomesList();
+  // Si déjà configuré, pré-remplir l'URL (pas la clé pour sécurité)
+  const cfg = getSbConfig();
+  if (cfg && cfg.url) {
+    document.getElementById('sb-url').value = cfg.url;
+    showConfigStatus('success', '✓ Supabase connecté et opérationnel');
+    document.getElementById('config-status').style.display = 'block';
+  }
 }
-function closeAdmin() { document.getElementById('admin-overlay').classList.remove('active'); }
 
-// ─── BUG FIX: switchTab ne prend plus "el" en paramètre ─────────
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('active');
+}
+
+// BUG FIX: switchTab sans paramètre "el"
 function switchTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  // Retrouver le bouton cliqué par data-tab
-  document.querySelectorAll('.admin-tab').forEach(t => {
-    if (t.getAttribute('data-tab') === tab) t.classList.add('active');
-  });
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+  if (tab === 'generate') {
+    const warn = document.getElementById('db-warning');
+    warn.style.display = isConfigured() ? 'none' : 'block';
+  }
   if (tab === 'liste') refreshDiplomesList();
 }
 
+// ── Générer un diplômé ──────────────────────────────
+function generatePassword() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let pw = 'SAMS-';
+  for (let i = 0; i < 6; i++) pw += chars[Math.floor(Math.random() * chars.length)];
+  return pw;
+}
+
 async function generateDiplome() {
-  const prenom = document.getElementById('admin-prenom').value.trim();
-  const nom = document.getElementById('admin-nom').value.trim();
+  if (!isConfigured()) {
+    showNotification('⚠ Configurez d\'abord Supabase (onglet Base de données)');
+    switchTab('config');
+    return;
+  }
+
+  const prenom    = document.getElementById('admin-prenom').value.trim();
+  const nom       = document.getElementById('admin-nom').value.trim();
   const formation = document.getElementById('admin-formation').value;
+
   if (!prenom || !nom) { showNotification('Prénom et nom requis'); return; }
 
-  const btn = document.querySelector('.generate-btn');
+  const btn = document.getElementById('gen-btn');
   btn.textContent = 'Enregistrement…';
   btn.disabled = true;
 
-  const entry = await addEntry(prenom, nom, formation);
-  const base = window.location.origin + window.location.pathname;
+  const entry = {
+    id:              'DIP-' + Date.now().toString(36).toUpperCase(),
+    prenom,
+    nom,
+    formation,
+    date_delivrance: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }),
+    password:        generatePassword(),
+    created_at:      Date.now()
+  };
 
-  document.getElementById('result-password').textContent = entry.password;
-  document.getElementById('result-link').textContent = base;
-  document.getElementById('result-box').classList.add('visible');
-  showNotification(`✓ Diplômé enregistré : ${prenom} ${nom}`);
+  try {
+    await dbInsert(entry);
 
-  btn.textContent = 'Enregistrer & Générer le lien';
+    document.getElementById('result-password').textContent = entry.password;
+    document.getElementById('result-link').textContent = window.location.origin + window.location.pathname;
+    document.getElementById('result-box').classList.add('visible');
+    showNotification(`✓ ${prenom} ${nom} enregistré dans Supabase`);
+
+    document.getElementById('admin-prenom').value = '';
+    document.getElementById('admin-nom').value = '';
+  } catch (e) {
+    showNotification('Erreur d\'insertion : ' + e.message);
+    console.error(e);
+  }
+
+  btn.textContent = 'Enregistrer & Générer le code';
   btn.disabled = false;
-
-  document.getElementById('admin-prenom').value = '';
-  document.getElementById('admin-nom').value = '';
 }
 
 function copyText(id) {
@@ -1486,47 +1675,63 @@ function copyText(id) {
   navigator.clipboard.writeText(text).then(() => showNotification('Copié !'));
 }
 
+// ── Liste des diplômés ──────────────────────────────
 async function refreshDiplomesList() {
   const tbody = document.getElementById('diplomes-tbody');
-  tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:var(--gold);font-style:normal">Chargement…</td></tr>`;
-  const db = await getDB();
-  if (db.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Aucun diplômé enregistré</td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:var(--gold);font-style:normal;font-family:'Rajdhani',sans-serif;letter-spacing:0.1em;">Chargement…</td></tr>`;
+
+  if (!isConfigured()) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Supabase non configuré</td></tr>`;
     return;
   }
-  tbody.innerHTML = db.slice().reverse().map(e => `
-    <tr>
-      <td>${e.prenom} ${e.nom.toUpperCase()}</td>
-      <td style="font-size:0.72rem;color:var(--grey)">${e.formation.replace('Formation aux Premiers Secours — ','PS ').replace('Formation ','')}</td>
-      <td style="font-size:0.72rem">${e.date}</td>
-      <td><span style="font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:0.1em">${e.password}</span></td>
-      <td style="display:flex;gap:0.4rem;align-items:center">
-        <span class="view-link" onclick="previewFromAdmin('${e.id}')">Voir</span>
-        <button class="delete-btn" onclick="removeEntry('${e.id}')">✕</button>
-      </td>
-    </tr>
-  `).join('');
+
+  try {
+    const rows = await dbGetAll();
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Aucun diplômé enregistré</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = rows.map(e => `
+      <tr>
+        <td>${e.prenom} ${e.nom.toUpperCase()}</td>
+        <td style="font-size:0.72rem;color:var(--grey)">${e.formation.replace('Formation aux Premiers Secours — ','PS ').replace('Formation ','')}</td>
+        <td style="font-size:0.72rem">${e.date_delivrance}</td>
+        <td><span style="font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;cursor:pointer" onclick="navigator.clipboard.writeText('${e.password}').then(()=>showNotification('Code copié !'))" title="Cliquer pour copier">${e.password}</span></td>
+        <td style="display:flex;gap:0.4rem;align-items:center">
+          <span class="view-link" onclick="previewFromAdmin('${e.id}')">Voir</span>
+          <button class="delete-btn" onclick="removeEntry('${e.id}')">✕</button>
+        </td>
+      </tr>
+    `).join('');
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:#e88">Erreur : ${e.message}</td></tr>`;
+  }
 }
 
 async function previewFromAdmin(id) {
-  const db = await getDB();
-  const entry = db.find(e => e.id === id);
-  if (!entry) return;
-  closeAdmin();
-  document.getElementById('password-page').style.display = 'none';
-  document.getElementById('landing').classList.remove('active');
-  showDiploma(entry.prenom, entry.nom, entry.formation, entry.id, entry.date);
+  try {
+    const rows = await sbRequest('GET', `diplomes?id=eq.${encodeURIComponent(id)}&limit=1`);
+    if (!rows || rows.length === 0) return;
+    const entry = rows[0];
+    closeAdmin();
+    document.getElementById('password-page').style.display = 'none';
+    document.getElementById('landing').classList.remove('active');
+    showDiploma(entry.prenom, entry.nom, entry.formation, entry.id, entry.date_delivrance);
+  } catch (e) { showNotification('Erreur : ' + e.message); }
 }
 
 async function removeEntry(id) {
-  if (confirm('Supprimer ce diplômé de la base de données partagée ?')) {
-    await deleteEntry(id);
+  if (!confirm('Supprimer ce diplômé de la base Supabase ?')) return;
+  try {
+    await dbDelete(id);
     refreshDiplomesList();
     showNotification('Entrée supprimée');
-  }
+  } catch (e) { showNotification('Erreur de suppression : ' + e.message); }
 }
 
-// ─── NOTIFICATION ─────────────────────────────────
+// ════════════════════════════════════════════════════════
+//  NOTIFICATION
+// ════════════════════════════════════════════════════════
 function showNotification(msg) {
   const ex = document.querySelector('.notification');
   if (ex) ex.remove();
@@ -1534,13 +1739,13 @@ function showNotification(msg) {
   n.className = 'notification';
   n.textContent = msg;
   document.body.appendChild(n);
-  setTimeout(() => { n.style.opacity='0'; n.style.transition='opacity 0.3s'; setTimeout(()=>n.remove(),300); }, 2800);
+  setTimeout(() => { n.style.opacity = '0'; n.style.transition = 'opacity 0.3s'; setTimeout(() => n.remove(), 300); }, 2800);
 }
 
-// ─── INIT ─────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeAdmin(); }
-});
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAdmin(); });
 document.getElementById('admin-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeAdmin();
 });
